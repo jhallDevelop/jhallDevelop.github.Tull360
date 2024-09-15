@@ -78,7 +78,10 @@
                   console.log("Fallback to Unity's SetFullscreen method 1");
                   // Handle iOS manually by resizing the canvas
                     //if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-                      console.log("Expanding canvas for iOS fullscreen");
+                      console.log("iOS fullscreen 1");
+                      if(canvasContainer.webkitRequestFullscreen){
+                          canvasContainer.webkitRequestFullscreen();
+                      }
 
                       
                 } else {
