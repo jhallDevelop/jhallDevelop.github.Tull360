@@ -28,9 +28,9 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/build.loader.js";
       var config = {
-        dataUrl: buildUrl + "/build.data",
-        frameworkUrl: buildUrl + "/build.framework.js",
-        codeUrl: buildUrl + "/build.wasm",
+        dataUrl: buildUrl + "/build.data.br",
+        frameworkUrl: buildUrl + "/build.framework.js.br",
+        codeUrl: buildUrl + "/build.wasm.br",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Tully360",
@@ -47,8 +47,8 @@
       
 
       container.style.width = "100%";
-      container.style.maxWidth = "1440px";
-      canvasContainer.style.aspectRatio = "1440/1080";
+      container.style.maxWidth = "1024px";
+      canvasContainer.style.aspectRatio = "1024/768";
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
