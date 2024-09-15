@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Tully360</title>
-    <meta name="description" content="Border Express Virtual Tour">
+    <title>{{{ PRODUCT_NAME }}}</title>
+    <meta name="description" content="{{{ DESCRIPTION }}}">
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -21,20 +21,26 @@
       <div id="unity-footer">
         <div id="unity-fullscreen-button" onclick="unityInstance.SetFullscreen(1)"></div>
         <button id="entervr" value="Enter VR" disabled>VR</button>
-        <div id="unity-build-title">Tully360</div>
+        <div id="unity-build-title">{{{ PRODUCT_NAME }}}</div>
       </div>
     </div>
     <script>
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/build.loader.js";
+      var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
       var config = {
-        dataUrl: buildUrl + "/build.data",
-        frameworkUrl: buildUrl + "/build.framework.js",
-        codeUrl: buildUrl + "/build.wasm",
+        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+#if MEMORY_FILENAME
+        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
+#endif
+#if SYMBOLS_FILENAME
+        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+#endif
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "Tully360",
-        productVersion: "0.1",
+        companyName: "{{{ COMPANY_NAME }}}",
+        productName: "{{{ PRODUCT_NAME }}}",
+        productVersion: "{{{ PRODUCT_VERSION }}}",
       };
 
       var container = document.querySelector("#unity-container");
@@ -44,11 +50,14 @@
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var unityInstance = null;
-      
+      {{{ WEBXR_POLYFILL_CONFIG }}}
 
       container.style.width = "100%";
-      container.style.maxWidth = "1024px";
-      canvasContainer.style.aspectRatio = "1024/768";
+      container.style.maxWidth = "{{{ WIDTH }}}px";
+      canvasContainer.style.aspectRatio = "{{{ WIDTH }}}/{{{ HEIGHT }}}";
+#if BACKGROUND_FILENAME
+      canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
+#endif
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
@@ -63,7 +72,10 @@
           {
             fullscreenButton.onclick = () => {
                 console.log("Full Screen button pressed");
-               if (canvas.requestFullscreen) {
+              // Check if Fullscreen API is supported
+
+              
+                if (canvas.requestFullscreen) {
                   // Standard fullscreen request
                   canvas.requestFullscreen();
                   console.log("Requesting general fullscreen mode");
@@ -73,8 +85,46 @@
                   canvas.webkitRequestFullscreen();
                 } else if (unityInstance && unityInstance.SetFullscreen) {
                   console.log("Fallback to Unity's SetFullscreen method");
-                  // Fallback for Unity's fullscreen function
-                  unityInstance.SetFullscreen(1);
+                  // Handle iOS manually by resizing the canvas
+                    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+                      console.log("Expanding canvas for iOS fullscreen");
+
+                      // Save original canvas size
+                      var originalWidth = canvas.style.width;
+                      var originalHeight = canvas.style.height;
+
+                      // Set the canvas size to full screen dimensions
+                      canvas.style.width = "100vw";
+                      canvas.style.height = "100vh";
+                      canvas.style.position = "fixed";
+                      canvas.style.top = 0;
+                      canvas.style.left = 0;
+                      canvas.style.zIndex = 9999;
+
+                      // Optionally listen for an exit button to restore original size
+                      var exitButton = document.createElement("button");
+                      exitButton.innerText = "Exit Fullscreen";
+                      exitButton.style.position = "fixed";
+                      exitButton.style.top = "10px";
+                      exitButton.style.right = "10px";
+                      exitButton.style.zIndex = 10000;
+                      document.body.appendChild(exitButton);
+
+                      exitButton.onclick = function () {
+                        console.log("Exiting fullscreen and restoring canvas size");
+
+                        // Restore original canvas size
+                        canvas.style.width = originalWidth;
+                        canvas.style.height = originalHeight;
+                        canvas.style.position = "relative";
+
+                        // Remove the exit button
+                        document.body.removeChild(exitButton);
+                      };
+                    } else {
+                      // Fallback to Unity's SetFullscreen for older browsers
+                      unityInstance.SetFullscreen(1);
+                    }
                 } else {
                   console.log("Fullscreen not supported in this browser");
                   alert("Fullscreen not supported in this browser.");
