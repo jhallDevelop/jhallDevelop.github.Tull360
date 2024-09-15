@@ -62,12 +62,11 @@
           if (fullscreenButton)
           {
             fullscreenButton.onclick = () => {
-
-              // Check if Fullscreen API is supported
-                if (canvas.requestFullscreen) {
-                  console.log("Requesting standard fullscreen mode");
+                console.log("Full Screen button pressed");
+               if (canvas.requestFullscreen) {
                   // Standard fullscreen request
                   canvas.requestFullscreen();
+                  console.log("Requesting general fullscreen mode");
                 } else if (canvas.webkitRequestFullscreen) {
                   console.log("Requesting iOS Safari (webkit) fullscreen mode");
                   // Safari (iOS) specific fullscreen request
