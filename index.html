@@ -62,7 +62,14 @@
           if (fullscreenButton)
           {
             fullscreenButton.onclick = () => {
-              unityInstance.SetFullscreen(1);
+
+              if (canvas.requestFullscreen) {
+                  canvas.requestFullscreen();
+                } else if (canvas.webkitRequestFullscreen) { // iOS Safari
+                  canvas.webkitRequestFullscreen();
+                } else {
+                  unityInstance.SetFullscreen(1); // Fallback for older implementations
+                }
             };
           }
         }).catch((message) => {
