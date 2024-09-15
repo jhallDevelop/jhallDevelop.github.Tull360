@@ -75,9 +75,9 @@
                   // Safari (iOS) specific fullscreen request
                   canvas.webkitRequestFullscreen();
                 } else if (unityInstance && unityInstance.SetFullscreen) {
-                  console.log("Fallback to Unity's SetFullscreen method");
+                  console.log("Fallback to Unity's SetFullscreen method 1");
                   // Handle iOS manually by resizing the canvas
-                    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+                    //if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
                       console.log("Expanding canvas for iOS fullscreen");
 
                       // Save original canvas size
@@ -112,7 +112,7 @@
                         // Remove the exit button
                         document.body.removeChild(exitButton);
                       };
-                    }
+                    //}
                 } else {
                   console.log("Fullscreen not supported in this browser");
                   alert("Fullscreen not supported in this browser.");
