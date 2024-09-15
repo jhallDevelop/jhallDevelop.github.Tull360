@@ -63,12 +63,22 @@
           {
             fullscreenButton.onclick = () => {
 
-              if (canvas.requestFullscreen) {
+              // Check if Fullscreen API is supported
+                if (canvas.requestFullscreen) {
+                  console.log("Requesting standard fullscreen mode");
+                  // Standard fullscreen request
                   canvas.requestFullscreen();
-                } else if (canvas.webkitRequestFullscreen) { // iOS Safari
+                } else if (canvas.webkitRequestFullscreen) {
+                  console.log("Requesting iOS Safari (webkit) fullscreen mode");
+                  // Safari (iOS) specific fullscreen request
                   canvas.webkitRequestFullscreen();
+                } else if (unityInstance && unityInstance.SetFullscreen) {
+                  console.log("Fallback to Unity's SetFullscreen method");
+                  // Fallback for Unity's fullscreen function
+                  unityInstance.SetFullscreen(1);
                 } else {
-                  unityInstance.SetFullscreen(1); // Fallback for older implementations
+                  console.log("Fullscreen not supported in this browser");
+                  alert("Fullscreen not supported in this browser.");
                 }
             };
           }
