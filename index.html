@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>{{{ PRODUCT_NAME }}}</title>
-    <meta name="description" content="{{{ DESCRIPTION }}}">
+    <title>Tully360</title>
+    <meta name="description" content="Border Express Virtual Tour">
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -21,26 +21,20 @@
       <div id="unity-footer">
         <div id="unity-fullscreen-button" onclick="unityInstance.SetFullscreen(1)"></div>
         <button id="entervr" value="Enter VR" disabled>VR</button>
-        <div id="unity-build-title">{{{ PRODUCT_NAME }}}</div>
+        <div id="unity-build-title">Tully360</div>
       </div>
     </div>
     <script>
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+      var loaderUrl = buildUrl + "/build.loader.js";
       var config = {
-        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
-        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
-        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
-#if MEMORY_FILENAME
-        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
-#endif
-#if SYMBOLS_FILENAME
-        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
-#endif
+        dataUrl: buildUrl + "/build.data",
+        frameworkUrl: buildUrl + "/build.framework.js",
+        codeUrl: buildUrl + "/build.wasm",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "{{{ COMPANY_NAME }}}",
-        productName: "{{{ PRODUCT_NAME }}}",
-        productVersion: "{{{ PRODUCT_VERSION }}}",
+        companyName: "DefaultCompany",
+        productName: "Tully360",
+        productVersion: "0.1",
       };
 
       var container = document.querySelector("#unity-container");
@@ -50,14 +44,11 @@
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var unityInstance = null;
-      {{{ WEBXR_POLYFILL_CONFIG }}}
+      
 
       container.style.width = "100%";
-      container.style.maxWidth = "{{{ WIDTH }}}px";
-      canvasContainer.style.aspectRatio = "{{{ WIDTH }}}/{{{ HEIGHT }}}";
-#if BACKGROUND_FILENAME
-      canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
-#endif
+      container.style.maxWidth = "1024px";
+      canvasContainer.style.aspectRatio = "1024/768";
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
