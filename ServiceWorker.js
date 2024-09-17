@@ -1,9 +1,9 @@
 const cacheName = "DefaultCompany-Tully360-0.1";
 const contentToCache = [
-    "Build/PWA_Build.loader.js",
-    "Build/PWA_Build.framework.js",
-    "Build/PWA_Build.data",
-    "Build/PWA_Build.wasm",
+    "Build/build.loader.js",
+    "Build/build.framework.js",
+    "Build/build.data",
+    "Build/build.wasm",
     "TemplateData/style.css"
 
 ];
