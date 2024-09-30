@@ -20,7 +20,6 @@
       <div id="unity-warning"> </div>
     </div>
     <script>
-      if (window.indexedDB != null) window.indexedDB.deleteDatabase("/idbfs");
       window.addEventListener("load", function () {
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker.register("ServiceWorker.js");
