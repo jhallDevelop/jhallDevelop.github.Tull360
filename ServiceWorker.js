@@ -1,9 +1,9 @@
-const cacheName = "Griffith University - Experimental Games Lab-Tully360-0.2";
+const cacheName = "DefaultCompany-Tully360-0.1";
 const contentToCache = [
     "Build/bb0d9ecdb05db3e84da20bd14a4f84dc.loader.js",
-    "Build/d58bb93d845b99d14cdc59feddd3498a.framework.js",
-    "Build/ac8aed0933f8b76dcc7f8465228420b5.data",
-    "Build/68ff2322e0f293c3f7ec84c981cc9c16.wasm",
+    "Build/9377059a97db8c2462840fa7fe5f454a.framework.js",
+    "Build/f2f8c5f8b7952933d38d7dc4ad22664f.data",
+    "Build/d0107a9c4af8aa3475b483241e8cf674.wasm",
     "TemplateData/style.css"
 
 ];
